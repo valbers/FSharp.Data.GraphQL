@@ -14,7 +14,7 @@ open FSharp.Data.GraphQL.Parser
 open FSharp.Data.GraphQL.Planning
 
 /// A function signature that represents a middleware for schema compile phase.
-/// I takes two arguments: A schema compile context, containing all the data used for the
+/// It takes two arguments: A schema compile context, containing all the data used for the
 /// compilation phase, and another function that can be called to pass
 /// the execution for the next middleware.
 type SchemaCompileMiddleware =
