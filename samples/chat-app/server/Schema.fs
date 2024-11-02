@@ -38,7 +38,7 @@ module MapFrom =
             FakePersistence.ChatMembers.Values
             |> Seq.filter (fun m -> x.Members |> List.contains m.MemberId)
             |> Seq.map (chatMemberInDb_To_ChatMember membersToGetDetailsFrom)
-            |> List.ofSeq
+            |> Seq.toList
     }
 
     let chatRoomInDb_To_ChatRoomForMember
@@ -58,7 +58,7 @@ module MapFrom =
                     m.MemberId <> chatMember.MemberId
                     && x.Members |> List.contains m.MemberId)
                 |> Seq.map (chatMemberInDb_To_ChatMember membersToGetDetailsFrom)
-                |> List.ofSeq
+                |> Seq.toList
         }
 
     let organizationInDb_To_Organization (x : Organization_In_Db) : Organization =
@@ -73,7 +73,7 @@ module MapFrom =
                 FakePersistence.ChatRooms.Values
                 |> Seq.filter (fun c -> x.ChatRooms |> List.contains c.Id)
                 |> Seq.map (chatRoomInDb_To_ChatRoom members)
-                |> List.ofSeq
+                |> Seq.toList
         }
 
     let organizationInDb_To_OrganizationForMember (memberId : MemberId) (x : Organization_In_Db) : OrganizationForMember option =

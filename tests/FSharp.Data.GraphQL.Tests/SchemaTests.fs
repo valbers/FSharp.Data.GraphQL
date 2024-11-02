@@ -9,7 +9,7 @@ open FSharp.Data.GraphQL.Types
 open FSharp.Data.GraphQL.Execution
 
 [<Fact>]
-let ``Object type should be able to merge fields with matching signatures from different interfaces`` () =
+let ``Object type must be able to merge fields with matching signatures from different interfaces`` () =
     let MovableType = Define.Interface ("Movable", [ Define.Field ("speed", IntType) ])
     let Movable2Type =
         Define.Interface ("Movable2", [ Define.Field ("speed", IntType); Define.Field ("acceleration", IntType) ])
@@ -38,7 +38,7 @@ let ``Object type should be able to merge fields with matching signatures from d
          |> List.map snd)
 
 [<Fact>]
-let ``Schema config should be able to override default error handling`` () =
+let ``Schema config must be able to override default error handling`` () =
     let mutable idx = 0
     let conf = {
         SchemaConfig.Default with
