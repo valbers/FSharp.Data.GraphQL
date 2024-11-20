@@ -20,12 +20,13 @@ jobs:
 
     - name: Set Build Version
       run: |
+        $documentName = "Directory.Build.props"
         $File = (
-          Select-Xml -XPath "/Project/PropertyGroup[@Label='NuGet']/Version" -Path "Directory.Build.props"
+          Select-Xml -XPath "/Project/PropertyGroup[@Label='NuGet']/Version" -Path $documentName
         )[0].Node
         $version = "$($File.InnerText)-ci-$Env:GITHUB_RUN_ID"
         $File.InnerText = $version
-        $File.OwnerDocument.Save((Join-Path $PWD.ProviderPath Directory.Build.props))
+        $File.OwnerDocument.Save((Join-Path $PWD.ProviderPath $documentName))
         echo "VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
       shell: pwsh
 
