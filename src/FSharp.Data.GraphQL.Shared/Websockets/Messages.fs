@@ -13,7 +13,7 @@ type SubscriptionsDict = IDictionary<SubscriptionId, SubscriptionUnsubscriber * 
 type RawMessage = { Id : string voption; Type : string; Payload : JsonDocument voption }
 
 type ServerRawPayload =
-    | ExecutionResult of IDictionary<string, obj>
+    | ExecutionResult of Output
     | ErrorMessages of NameValueLookup list
     | CustomResponse of JsonDocument
 
@@ -32,7 +32,7 @@ type ServerMessage =
     | ConnectionAck
     | ServerPing
     | ServerPong of JsonDocument voption
-    | Next of id : string * payload : IDictionary<string, obj>
+    | Next of id : string * payload : Output
     | Error of id : string * err : NameValueLookup list
     | Complete of id : string
 
