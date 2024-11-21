@@ -2,8 +2,7 @@ module FSharp.Data.GraphQL.Tests.AspNetCore.InvalidMessageTests
 
 open System.Text.Json
 open Xunit
-open FSharp.Data.GraphQL.Server.AspNetCore
-open FSharp.Data.GraphQL.Server.AspNetCore.WebSockets
+open FSharp.Data.GraphQL.Shared.Websockets
 
 let toClientMessage (theInput : string) =
     JsonSerializer.Deserialize<ClientMessage> (theInput, serializerOptions)
@@ -56,7 +55,7 @@ let ``Null payload json in subscribe message will result in invalid message`` ()
           "payload": null
        }
     """
-    |> willResultInInvalidMessage "Invalid payload received: Failed to parse type FSharp.Data.GraphQL.Server.AspNetCore.GQLRequestContent: expected JSON object, found Null."
+    |> willResultInInvalidMessage "Invalid payload received: Failed to parse type FSharp.Data.GraphQL.Shared.GQLRequestContent: expected JSON object, found Null."
 
 [<Fact>]
 let ``Payload type of number in subscribe message will result in invalid message`` () =
@@ -67,7 +66,7 @@ let ``Payload type of number in subscribe message will result in invalid message
     }
     """
     |> willResultInInvalidMessage
-        "Invalid payload received: Failed to parse type FSharp.Data.GraphQL.Server.AspNetCore.GQLRequestContent: expected JSON object, found Number."
+        "Invalid payload received: Failed to parse type FSharp.Data.GraphQL.Shared.GQLRequestContent: expected JSON object, found Number."
 
 [<Fact>]
 let ``No id in subscribe message will result in invalid message`` () =
@@ -89,7 +88,7 @@ let ``String payload wrongly used in subscribe will result in invalid message`` 
        }
     """
     |> willResultInInvalidMessage
-        "Invalid payload received: Failed to parse type FSharp.Data.GraphQL.Server.AspNetCore.GQLRequestContent: expected JSON object, found String."
+        "Invalid payload received: Failed to parse type FSharp.Data.GraphQL.Shared.GQLRequestContent: expected JSON object, found String."
 
 [<Fact>]
 let ``Id is incorrectly a number in a subscribe message will result in JsonException`` () =

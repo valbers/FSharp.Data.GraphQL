@@ -10,6 +10,7 @@ open FSharp.Data.GraphQL
 open FSharp.Data.GraphQL.Types
 open FSharp.Data.GraphQL.Execution
 open FSharp.Data.GraphQL.Server.Relay
+open FSharp.Data.GraphQL.Shared
 
 type Pet =
     | Cat of name : string * barks : bool

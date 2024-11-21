@@ -6,7 +6,7 @@ open System.Threading
 open FSharp.Control
 open FSharp.Data.GraphQL
 open FSharp.Data.GraphQL.Parser
-open FSharp.Data.GraphQL.Execution
+open FSharp.Data.GraphQL.Shared
 open FSharp.Data.GraphQL.Types
 
 #nowarn "40"

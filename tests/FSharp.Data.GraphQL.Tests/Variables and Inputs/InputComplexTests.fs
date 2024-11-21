@@ -16,6 +16,7 @@ open FSharp.Data.GraphQL.Ast
 open FSharp.Data.GraphQL.Types
 open FSharp.Data.GraphQL.Parser
 open FSharp.Data.GraphQL.Execution
+open FSharp.Data.GraphQL.Shared
 open ErrorHelpers
 
 let TestComplexScalar =

@@ -39,6 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="NameValueLookup.fs" />
+    <Compile Include="Output.fs" />
     <Compile Include="Helpers\Diagnostics.fs" />
     <Compile Include="Helpers\ObjAndStructConversions.fs" />
     <Compile Include="Helpers\Extensions.fs" />
@@ -46,6 +48,7 @@
     <Compile Include="Helpers\MemoryCache.fs" />
     <Compile Include="Errors.fs" />
     <Compile Include="Exception.fs" />
+    <Compile Include="Websockets/Exceptions.fs" />
     <Compile Include="ValidationTypes.fs" />
     <Compile Include="AsyncVal.fs" />
     <Compile Include="Ast.fs" />
@@ -58,6 +61,10 @@
     <Compile Include="Validation.fs" />
     <Compile Include="ValidationResultCache.fs" />
     <Compile Include="Parser.fs" />
+    <Compile Include="GQLRequest.fs" />
+    <Compile Include="Websockets/Messages.fs" />
+    <Compile Include="Serialization/JsonConverters.fs" />
+    <Compile Include="Serialization/JSON.fs" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,9 @@
-namespace FSharp.Data.GraphQL.Server.AspNetCore.WebSockets
+namespace FSharp.Data.GraphQL.Shared.Websockets
 
 open System
 open System.Collections.Generic
 open System.Text.Json
-open FSharp.Data.GraphQL.Execution
-open FSharp.Data.GraphQL.Server.AspNetCore
+open FSharp.Data.GraphQL.Shared
 
 type SubscriptionId = string
 type SubscriptionUnsubscriber = IDisposable
@@ -14,7 +13,7 @@ type SubscriptionsDict = IDictionary<SubscriptionId, SubscriptionUnsubscriber * 
 type RawMessage = { Id : string voption; Type : string; Payload : JsonDocument voption }
 
 type ServerRawPayload =
-    | ExecutionResult of Output
+    | ExecutionResult of IDictionary<string, obj>
     | ErrorMessages of NameValueLookup list
     | CustomResponse of JsonDocument
 
@@ -33,7 +32,7 @@ type ServerMessage =
     | ConnectionAck
     | ServerPing
     | ServerPong of JsonDocument voption
-    | Next of id : string * payload : Output
+    | Next of id : string * payload : IDictionary<string, obj>
     | Error of id : string * err : NameValueLookup list
     | Complete of id : string
 

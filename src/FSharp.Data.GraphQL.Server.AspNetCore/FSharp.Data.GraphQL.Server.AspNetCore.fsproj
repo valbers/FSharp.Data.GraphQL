@@ -13,11 +13,6 @@
 
   <ItemGroup>
     <Compile Include="Helpers.fs" />
-    <Compile Include="Exceptions.fs" />
-    <Compile Include="GQLRequest.fs" />
-    <Compile Include="Messages.fs" />
-    <Compile Include="Serialization/JsonConverters.fs" />
-    <Compile Include="Serialization\JSON.fs" />
     <Compile Include="GraphQLOptions.fs" />
     <Compile Include="GraphQLSubscriptionsManagement.fs" />
     <Compile Include="GraphQLWebsocketMiddleware.fs" />

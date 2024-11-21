@@ -3,8 +3,8 @@ module FSharp.Data.GraphQL.Tests.AspNetCore.SerializationTests
 open Xunit
 open System.Text.Json
 open FSharp.Data.GraphQL.Ast
-open FSharp.Data.GraphQL.Server.AspNetCore
-open FSharp.Data.GraphQL.Server.AspNetCore.WebSockets
+open FSharp.Data.GraphQL.Shared
+open FSharp.Data.GraphQL.Shared.Websockets
 open System.Text.Json.Serialization
 
 [<Fact>]
