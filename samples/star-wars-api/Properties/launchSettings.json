@@ -25,7 +25,7 @@
       //#if (EnableOpenAPI)
       "launchUrl": "",
       //#else
-      "launchUrl": "cakePop",
+      "launchUrl": "nitro",
       //#endif
       "applicationUrl": "http://localhost:8086",
       "environmentVariables": {
@@ -41,7 +41,7 @@
       //#if (EnableOpenAPI)
       "launchUrl": "",
       //#else
-      "launchUrl": "cakePop",
+      "launchUrl": "nitro",
       //#endif
       "applicationUrl": "https://localhost:8087;http://localhost:8086",
       "environmentVariables": {
@@ -53,7 +53,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       //#if (EnableOpenAPI)
-      "launchUrl": "cakePop",
+      "launchUrl": "nitro",
       //#else
       "launchUrl": "",
       //#endif

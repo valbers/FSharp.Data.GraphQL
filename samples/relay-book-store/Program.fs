@@ -38,7 +38,7 @@ let main argv =
         app.UseGraphQLPlayground "/playground" |> ignore
         app.UseGraphQLVoyager "/voyager" |> ignore
         app.UseRouting () |> ignore
-        app.UseEndpoints (fun endpoints -> endpoints.MapBananaCakePop (PathString "/cakePop") |> ignore)
+        app.UseEndpoints (fun endpoints -> endpoints.MapNitroApp (PathString "/nitro") |> ignore)
         |> ignore
 
     app

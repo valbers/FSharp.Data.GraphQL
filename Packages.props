@@ -24,7 +24,7 @@
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
     <PackageReference Update="Microsoft.NETCore.Platforms" Version="$(SystemVersion)" />
     <PackageReference Update="NuGet.CommandLine" Version="1.*" />
-    <PackageReference Update="Oxpecker" Version="0.14.*" />
+    <PackageReference Update="Oxpecker" Version="1.*" />
     <PackageReference Update="System.CodeDom" Version="$(SystemVersion)" />
     <PackageReference Update="System.Collections.Immutable" Version="$(SystemVersion)" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="$(SystemVersion)" />
@@ -52,7 +52,7 @@
   <ItemGroup Label="Test platform">
     <PackageReference Update="BenchmarkDotNet" Version="0.14.*" />
     <PackageReference Update="BenchmarkDotNet.Annotations" Version="0.*" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Update="Microsoft.TestPlatform.TestHost" Version="17.7.*" />
     <PackageReference Update="Microsoft.TestPlatform.ObjectModel" Version="17.7.*" />
     <PackageReference Update="xunit" Version="$(XUnitVersion)" />
@@ -75,7 +75,7 @@
     <PackageReference Update="GraphQL.Server.Ui.GraphiQL" Version="8.*" />
     <PackageReference Update="GraphQL.Server.Ui.Playground" Version="8.*"  />
     <PackageReference Update="GraphQL.Server.Ui.Voyager" Version="8.*"  />
-    <PackageReference Update="HotChocolate.AspNetCore" Version="13.*" />
+    <PackageReference Update="HotChocolate.AspNetCore" Version="14.*" />
     <PackageReference Update="Iced" Version="1.17.*" />
     <PackageReference Update="Microsoft.CodeCoverage" Version="17.3.*" />
     <PackageReference Update="Microsoft.Data.Sqlite" Version="$(MicrosoftExtensionsVersion)" />
