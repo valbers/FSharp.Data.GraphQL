@@ -2,7 +2,7 @@ module FSharp.Data.GraphQL.Tests.AspNetCore.InvalidMessageTests
 
 open System.Text.Json
 open Xunit
-open FSharp.Data.GraphQL.Shared.Websockets
+open FSharp.Data.GraphQL.Shared.WebSockets
 
 let toClientMessage (theInput : string) =
     JsonSerializer.Deserialize<ClientMessage> (theInput, serializerOptions)

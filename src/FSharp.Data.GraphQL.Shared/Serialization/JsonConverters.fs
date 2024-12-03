@@ -6,7 +6,7 @@ open System.Text.Json.Serialization
 
 open FSharp.Data.GraphQL
 open FSharp.Data.GraphQL.Shared
-open FSharp.Data.GraphQL.Shared.Websockets
+open FSharp.Data.GraphQL.Shared.WebSockets
 
 [<Sealed>]
 type ClientMessageConverter () =

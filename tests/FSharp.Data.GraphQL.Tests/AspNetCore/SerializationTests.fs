@@ -4,7 +4,7 @@ open Xunit
 open System.Text.Json
 open FSharp.Data.GraphQL.Ast
 open FSharp.Data.GraphQL.Shared
-open FSharp.Data.GraphQL.Shared.Websockets
+open FSharp.Data.GraphQL.Shared.WebSockets
 open System.Text.Json.Serialization
 
 [<Fact>]

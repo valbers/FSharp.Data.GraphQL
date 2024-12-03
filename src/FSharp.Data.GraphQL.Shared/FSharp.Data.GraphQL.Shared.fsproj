@@ -48,7 +48,6 @@
     <Compile Include="Helpers\MemoryCache.fs" />
     <Compile Include="Errors.fs" />
     <Compile Include="Exception.fs" />
-    <Compile Include="Websockets/Exceptions.fs" />
     <Compile Include="ValidationTypes.fs" />
     <Compile Include="AsyncVal.fs" />
     <Compile Include="Ast.fs" />
@@ -62,7 +61,7 @@
     <Compile Include="ValidationResultCache.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="GQLRequest.fs" />
-    <Compile Include="Websockets/Messages.fs" />
+    <Compile Include="WebSockets.fs" />
     <Compile Include="Serialization/JsonConverters.fs" />
     <Compile Include="Serialization/JSON.fs" />
   </ItemGroup>

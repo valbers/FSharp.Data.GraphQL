@@ -20,7 +20,7 @@ open FsToolkit.ErrorHandling
 
 open FSharp.Data.GraphQL
 open FSharp.Data.GraphQL.Execution
-open FSharp.Data.GraphQL.Shared.Websockets
+open FSharp.Data.GraphQL.Shared.WebSockets
 
 type GraphQLWebSocketMiddleware<'Root>
     (
