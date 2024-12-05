@@ -19,7 +19,7 @@ type ClientMessageConverter () =
     let invalidMsg (explanation : string) = InvalidMessage (4400, explanation) |> Result.Error
 
     let errMsgToStr (struct (docId : int, graphQLErrorMsgs : GQLProblemDetails list)) =
-        String.Join ("n", graphQLErrorMsgs |> Seq.map (fun err -> err.Message))
+        String.Join ("\n", graphQLErrorMsgs |> Seq.map (fun err -> err.Message))
 
     let unpackRopResult ropResult =
         match ropResult with
