@@ -73,7 +73,6 @@
     <PackageReference Update="FsToolkit.ErrorHandling" Version="4.15.3" />
     <PackageReference Update="GraphQL.Server.Ui.Altair" Version="8.*" />
     <PackageReference Update="GraphQL.Server.Ui.GraphiQL" Version="8.*" />
-    <PackageReference Update="GraphQL.Server.Ui.Playground" Version="8.*"  />
     <PackageReference Update="GraphQL.Server.Ui.Voyager" Version="8.*"  />
     <PackageReference Update="HotChocolate.AspNetCore" Version="14.*" />
     <PackageReference Update="Iced" Version="1.17.*" />
