@@ -17,7 +17,7 @@ module ServiceCollectionExtensions =
         SchemaExecutor = executor
         RootFactory = rootFactory
         ReadBufferSize = GraphQLOptionsDefaults.ReadBufferSize
-        SerializerOptions = Json.getWSSerializerOptions additionalConverters
+        SerializerOptions = Shared.Json.getWSSerializerOptions additionalConverters
         WebsocketOptions = {
             EndpointUrl = endpointUrl
             ConnectionInitTimeout = TimeSpan.FromMilliseconds (GraphQLOptionsDefaults.WebSocketConnectionInitTimeoutInMs)
@@ -67,7 +67,7 @@ module ServiceCollectionExtensions =
                 // Use if you want to return HTTP responses using minmal APIs IResult interface
                 .Configure<HttpClientJsonOptions>(
                     Action<HttpClientJsonOptions>(fun o ->
-                        Json.configureDefaultSerializerOptions additionalConverters o.SerializerOptions
+                        Shared.Json.configureDefaultSerializerOptions additionalConverters o.SerializerOptions
                     )
                 )
                 .AddSingleton<IOptionsFactory<GraphQLOptions<'Root>>>(

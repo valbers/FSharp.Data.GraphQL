@@ -1,5 +1,5 @@
 [<CompilationRepresentation (CompilationRepresentationFlags.ModuleSuffix)>]
-module FSharp.Data.GraphQL.Server.AspNetCore.Json
+module FSharp.Data.GraphQL.Shared.Json
 
 open System.Text.Json
 open System.Text.Json.Serialization

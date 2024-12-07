@@ -1,10 +1,12 @@
-namespace FSharp.Data.GraphQL.Server.AspNetCore.WebSockets
+namespace FSharp.Data.GraphQL.Shared.WebSockets
 
 open System
 open System.Collections.Generic
 open System.Text.Json
-open FSharp.Data.GraphQL.Execution
-open FSharp.Data.GraphQL.Server.AspNetCore
+open FSharp.Data.GraphQL.Shared
+
+type InvalidWebsocketMessageException (explanation : string) =
+    inherit System.Exception (explanation)
 
 type SubscriptionId = string
 type SubscriptionUnsubscriber = IDisposable

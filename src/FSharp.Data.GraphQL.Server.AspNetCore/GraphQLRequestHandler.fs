@@ -13,6 +13,7 @@ open FSharp.Data.GraphQL
 open FsToolkit.ErrorHandling
 
 open FSharp.Data.GraphQL.Server
+open FSharp.Data.GraphQL.Shared
 
 type DefaultGraphQLRequestHandler<'Root> (
     httpContextAccessor : IHttpContextAccessor,

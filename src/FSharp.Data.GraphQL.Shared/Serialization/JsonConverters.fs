@@ -1,11 +1,12 @@
-namespace FSharp.Data.GraphQL.Server.AspNetCore
+namespace FSharp.Data.GraphQL.Shared
 
 open System
 open System.Text.Json
 open System.Text.Json.Serialization
 
 open FSharp.Data.GraphQL
-open FSharp.Data.GraphQL.Server.AspNetCore.WebSockets
+open FSharp.Data.GraphQL.Shared
+open FSharp.Data.GraphQL.Shared.WebSockets
 
 [<Sealed>]
 type ClientMessageConverter () =
@@ -18,7 +19,7 @@ type ClientMessageConverter () =
     let invalidMsg (explanation : string) = InvalidMessage (4400, explanation) |> Result.Error
 
     let errMsgToStr (struct (docId : int, graphQLErrorMsgs : GQLProblemDetails list)) =
-        String.Join ('\n', graphQLErrorMsgs |> Seq.map (fun err -> err.Message))
+        String.Join ("\n", graphQLErrorMsgs |> Seq.map (fun err -> err.Message))
 
     let unpackRopResult ropResult =
         match ropResult with

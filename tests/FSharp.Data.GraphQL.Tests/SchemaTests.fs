@@ -6,7 +6,7 @@ module FSharp.Data.GraphQL.Tests.SchemaTests
 open Xunit
 open FSharp.Data.GraphQL
 open FSharp.Data.GraphQL.Types
-open FSharp.Data.GraphQL.Execution
+open FSharp.Data.GraphQL.Shared
 
 [<Fact>]
 let ``Object type must be able to merge fields with matching signatures from different interfaces`` () =

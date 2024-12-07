@@ -47,7 +47,6 @@ type Startup private () =
         if env.IsDevelopment () then
             app.UseGraphQLAltair "/altair" |> ignore
             app.UseGraphQLGraphiQL "/graphiql" |> ignore
-            app.UseGraphQLPlayground "/playground" |> ignore
             app.UseGraphQLVoyager "/voyager" |> ignore
             app.UseRouting () |> ignore
             app.UseEndpoints (fun endpoints -> endpoints.MapNitroApp (PathString "/nitro") |> ignore)

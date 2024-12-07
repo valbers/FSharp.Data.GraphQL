@@ -13,6 +13,7 @@ open System.Collections.Immutable
 #nowarn "0040"
 
 open FSharp.Data.GraphQL
+open FSharp.Data.GraphQL.Shared
 open FSharp.Data.GraphQL.Types
 open FSharp.Data.GraphQL.Parser
 open FSharp.Data.GraphQL.Execution

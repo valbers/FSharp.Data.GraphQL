@@ -1,4 +1,4 @@
-namespace FSharp.Data.GraphQL.Server.AspNetCore
+namespace FSharp.Data.GraphQL.Shared
 
 open System.Collections.Immutable
 open System.Text.Json

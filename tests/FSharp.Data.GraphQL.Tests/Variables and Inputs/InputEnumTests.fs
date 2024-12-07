@@ -13,7 +13,7 @@ open System.Text.Json
 open FSharp.Data.GraphQL
 open FSharp.Data.GraphQL.Types
 open FSharp.Data.GraphQL.Parser
-open FSharp.Data.GraphQL.Execution
+open FSharp.Data.GraphQL.Shared
 
 let stringifyArg name (ctx : ResolveFieldContext) () =
     let arg = ctx.TryArg name |> Option.toObj
