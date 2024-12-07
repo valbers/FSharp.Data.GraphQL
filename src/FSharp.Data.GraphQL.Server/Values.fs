@@ -37,7 +37,7 @@ let private normalizeOptional (outputType : Type) value =
         let inputType = value.GetType ()
         if inputType.Name <> outputType.Name then
             // Use only when option or voption so must not be null
-            let expectedOutputType = outputType.GenericTypeArguments.FirstOrDefault()
+            let expectedOutputType = outputType.GenericTypeArguments.FirstOrDefault ()
             if
                 outputType.FullName.StartsWith ReflectionHelper.OptionTypeName
                 && expectedOutputType.IsAssignableFrom inputType
@@ -52,7 +52,7 @@ let private normalizeOptional (outputType : Type) value =
                 valuesome value
             else
                 // Use only when option or voption so must not be null
-                let actualInputType = inputType.GenericTypeArguments.FirstOrDefault()
+                let actualInputType = inputType.GenericTypeArguments.FirstOrDefault ()
                 if
                     inputType.FullName.StartsWith ReflectionHelper.OptionTypeName
                     && outputType.IsAssignableFrom actualInputType
@@ -109,63 +109,66 @@ let rec internal compileByType
         let objtype = objDef.Type
         let ctor = ReflectionHelper.matchConstructor objtype (objDef.Fields |> Array.map (fun x -> x.Name))
 
-        let struct (mapper, typeMismatchParameters, nullableMismatchParameters, missingParameters) =
-            ctor.GetParameters ()
-            |> Array.fold
-                (fun struct (
-                            all : ResizeArray<_>,
-                            mismatch : HashSet<_>,
-                            areNullable : HashSet<_>,
-                            missing : HashSet<_>
-                        )
-                        param
-                        ->
-                    match
-                        objDef.Fields
-                        |> Array.tryFind (fun field -> field.Name = param.Name)
-                    with
-                    | Some field ->
-                        match field.TypeDef with
-                        | Nullable _ when
-                            ReflectionHelper.isPrameterMandatory param
-                            && field.DefaultValue.IsNone
-                            ->
-                            areNullable.Add param.Name |> ignore
-                        | inputDef ->
-                            if ReflectionHelper.isAssignableWithUnwrap inputDef.Type param.ParameterType then
-                                all.Add (struct (ValueSome field, param)) |> ignore
-                            else
-                                // TODO: Consider improving by specifying type mismatches
-                                mismatch.Add param.Name |> ignore
-                    | None ->
-                        if ReflectionHelper.isParameterOptional param then
-                            all.Add <| struct (ValueNone, param) |> ignore
-                        else
-                            missing.Add param.Name |> ignore
-                    struct (all, mismatch, areNullable, missing))
-                struct (ResizeArray (), HashSet (), HashSet (), HashSet ())
+        let parametersMap =
+            let typeMismatchParameters = HashSet ()
+            let nullableMismatchParameters = HashSet ()
+            let missingParameters = HashSet ()
 
-        let exceptions : exn list =  [
-            if missingParameters.Any () then
-                let message =
-                    let ``params`` = String.Join ("', '", missingParameters)
-                    $"Input object '%s{objDef.Name}' refers to type '%O{objtype}', but mandatory constructor parameters '%s{``params``}' don't match any of the defined GraphQL input fields"
-                InvalidInputTypeException (message, missingParameters.ToImmutableHashSet ())
-            if nullableMismatchParameters.Any () then
-                let message =
-                    let ``params`` = String.Join ("', '", nullableMismatchParameters)
-                    $"Input object %s{objDef.Name} refers to type '%O{objtype}', but constructor parameters for optional GraphQL fields '%s{``params``}' are not optional"
-                InvalidInputTypeException (message, nullableMismatchParameters.ToImmutableHashSet ())
-            if typeMismatchParameters.Any () then
-                let message =
-                    let ``params`` = String.Join ("', '", typeMismatchParameters)
-                    $"Input object %s{objDef.Name} refers to type '%O{objtype}', but GraphQL fields '%s{``params``}' have different types than constructor parameters"
-                InvalidInputTypeException (message, typeMismatchParameters.ToImmutableHashSet ())
-        ]
-        match exceptions with
-        | [] -> ()
-        | [ ex ] -> raise ex
-        | _ -> raise (AggregateException ($"Invalid input object '%O{objtype}'", exceptions))
+            let allParameters =
+                ctor.GetParameters ()
+                |> Array.fold
+                    (fun (allParameters : _ ResizeArray) param ->
+                        match
+                            objDef.Fields
+                            |> Array.tryFind (fun field -> field.Name = param.Name)
+                        with
+                        | Some field ->
+                            match field.TypeDef with
+                            | Nullable _ when
+                                ReflectionHelper.isPrameterMandatory param
+                                && field.DefaultValue.IsNone
+                                ->
+                                nullableMismatchParameters.Add param.Name |> ignore
+                            | inputDef ->
+                                let inputType, paramType = inputDef.Type, param.ParameterType
+                                if ReflectionHelper.isAssignableWithUnwrap inputType paramType then
+                                    allParameters.Add (struct (ValueSome field, param))
+                                    |> ignore
+                                else
+                                    // TODO: Consider improving by specifying type mismatches
+                                    typeMismatchParameters.Add param.Name |> ignore
+                        | None ->
+                            if ReflectionHelper.isParameterOptional param then
+                                allParameters.Add <| struct (ValueNone, param) |> ignore
+                            else
+                                missingParameters.Add param.Name |> ignore
+                        allParameters)
+                    (ResizeArray ())
+                |> ImmutableArray.CreateRange
+
+            let exceptions : exn list = [
+                if missingParameters.Any () then
+                    let message =
+                        let ``params`` = String.Join ("', '", missingParameters)
+                        $"Input object '%s{objDef.Name}' refers to type '%O{objtype}', but mandatory constructor parameters '%s{``params``}' don't match any of the defined GraphQL input fields"
+                    InvalidInputTypeException (message, missingParameters.ToImmutableHashSet ())
+                if nullableMismatchParameters.Any () then
+                    let message =
+                        let ``params`` = String.Join ("', '", nullableMismatchParameters)
+                        $"Input object %s{objDef.Name} refers to type '%O{objtype}', but constructor parameters for optional GraphQL fields '%s{``params``}' are not optional"
+                    InvalidInputTypeException (message, nullableMismatchParameters.ToImmutableHashSet ())
+                if typeMismatchParameters.Any () then
+                    let message =
+                        let ``params`` = String.Join ("', '", typeMismatchParameters)
+                        $"Input object %s{objDef.Name} refers to type '%O{objtype}', but GraphQL fields '%s{``params``}' have different types than constructor parameters"
+                    InvalidInputTypeException (message, typeMismatchParameters.ToImmutableHashSet ())
+            ]
+            match exceptions with
+            | [] -> ()
+            | [ ex ] -> raise ex
+            | _ -> raise (AggregateException ($"Invalid input object '%O{objtype}'", exceptions))
+
+            allParameters
 
         let attachErrorExtensionsIfScalar inputSource path objDef (fieldDef : InputFieldDef) result =
 
@@ -192,10 +195,13 @@ let rec internal compileByType
         }
 
         fun value variables ->
+#if DEBUG
+            let objDef = objDef
+#endif
             match value with
             | ObjectValue props -> result {
                 let argResults =
-                    mapper
+                    parametersMap
                     |> Seq.map (fun struct (field, param) ->
                         match field with
                         | ValueSome field ->
@@ -227,7 +233,7 @@ let rec internal compileByType
                     | :? IReadOnlyDictionary<string, obj> as objectFields ->
 
                         let argResults =
-                            mapper
+                            parametersMap
                             |> Seq.map (fun struct (field, param) -> result {
                                 match field with
                                 | ValueSome field ->
@@ -313,6 +319,9 @@ let rec internal compileByType
         | InputObject inputObjDef -> inputObjDef.ExecuteInput <- inner
         | _ -> ()
         fun value variables ->
+#if DEBUG
+            let innerDef = innerDef
+#endif
             match value with
             | NullValue -> Ok null
             | _ -> inner value variables
@@ -485,7 +494,7 @@ and private coerceVariableInputObject inputObjectPath (originalObjDef, objDef) (
     | JsonValueKind.Object -> result {
         let mappedResult =
             objDef.Fields
-            |> Array.map (fun field ->
+            |> Seq.vchoose (fun field ->
                 let inline coerce value =
                     let inputObjectPath' = (box field.Name) :: inputObjectPath
                     let objectFieldErrorDetails =
@@ -496,11 +505,12 @@ and private coerceVariableInputObject inputObjectPath (originalObjDef, objDef) (
                         coerceVariableValue false inputObjectPath' objectFieldErrorDetails (fieldTypeDef, fieldTypeDef) varDef value
                     KeyValuePair (field.Name, value)
                 match input.TryGetProperty field.Name with
-                | true, value -> coerce value
+                | true, value -> coerce value |> ValueSome
                 | false, _ ->
                     match field.DefaultValue with
                     | Some value -> KeyValuePair (field.Name, Ok value)
-                    | None -> coerce (JsonDocument.Parse("null").RootElement))
+                    | None -> coerce (JsonDocument.Parse("null").RootElement)
+                    |> ValueSome)
             |> ImmutableDictionary.CreateRange
 
         let! mapped = mappedResult |> splitObjectErrorsList
