@@ -15,7 +15,7 @@ open FSharp.Data.GraphQL.Server.Middleware
 [<Fact>]
 let ``comparerToStringComparison maps well-known StringComparer instances`` () =
     let currentCultureIsInvariant =
-        obj.ReferenceEquals (StringComparer.CurrentCulture, StringComparer.InvariantCulture)
+        CultureInfo.CurrentCulture.CompareInfo.Equals CultureInfo.InvariantCulture.CompareInfo
 
     let testCases =
         [
@@ -42,7 +42,7 @@ let ``comparerToStringComparison maps well-known StringComparer instances`` () =
 [<Fact>]
 let ``comparerToStringComparison singleton mappings are all distinct`` () =
     let currentCultureIsInvariant =
-        obj.ReferenceEquals (StringComparer.CurrentCulture, StringComparer.InvariantCulture)
+        CultureInfo.CurrentCulture.CompareInfo.Equals CultureInfo.InvariantCulture.CompareInfo
 
     // On environments where CurrentCulture == InvariantCulture, Current* singletons are
     // the same objects as Invariant* ones, so distinctness can only be checked for the
@@ -150,7 +150,7 @@ let ``comparerToStringComparison returns ValueNone for non-standard culture comp
 [<Fact>]
 let ``comparerToStringComparison is deterministic for singletons`` () =
     let currentCultureIsInvariant =
-        obj.ReferenceEquals (StringComparer.CurrentCulture, StringComparer.InvariantCulture)
+        CultureInfo.CurrentCulture.CompareInfo.Equals CultureInfo.InvariantCulture.CompareInfo
 
     let singletons : IComparer list =
         [
