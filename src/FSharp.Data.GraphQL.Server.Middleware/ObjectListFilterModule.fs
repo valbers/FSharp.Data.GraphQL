@@ -327,8 +327,9 @@ module ObjectListFilter =
                     param.Value
                 else
                     Expression.PropertyOrField (param, f.FieldName)
+            let unwrappedMemberType = TypeCoercion.unwrapOption ``member``.Type
             match comparerToStringComparison comparer with
-            | ValueSome comparison ->
+            | ValueSome comparison when Type.(=) (unwrappedMemberType, stringType) ->
                 let value = Helpers.unwrap (box f.Value) :?> string
                 Expression.Not (
                     Expression.Call (
@@ -339,6 +340,7 @@ module ObjectListFilter =
                     )
                 )
                 :> Expression
+            | ValueSome _
             | ValueNone ->
                 let hasEqualityOperator = hasEqualityOperator ``member``.Type
                 match f.Value with
@@ -361,8 +363,9 @@ module ObjectListFilter =
                     param.Value
                 else
                     Expression.PropertyOrField (param, f.FieldName)
+            let unwrappedMemberType = TypeCoercion.unwrapOption ``member``.Type
             match comparerToStringComparison comparer with
-            | ValueSome comparison ->
+            | ValueSome comparison when Type.(=) (unwrappedMemberType, stringType) ->
                 let value = Helpers.unwrap (box f.Value) :?> string
                 Expression.Call (
                     normalizeStringMemberExpr ``member``,
@@ -371,6 +374,7 @@ module ObjectListFilter =
                     Expression.Constant comparison
                 )
                 :> Expression
+            | ValueSome _
             | ValueNone ->
                 let hasEqualityOperator = hasEqualityOperator ``member``.Type
                 match f.Value with

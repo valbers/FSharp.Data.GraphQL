@@ -2,6 +2,7 @@
 module FSharp.Data.GraphQL.Tests.ObjectListFilter.TypeCoercion.FilterTests
 
 open Xunit
+open System
 open FSharp.Data.GraphQL.Server.Middleware
 open FSharp.Data.GraphQL.Tests.ObjectListFilter.TypeCoercion.Common
 
@@ -197,3 +198,34 @@ let ``coerceFilter coerces values inside NOT`` () =
     let result = applyFilter filter
     result |> List.length |> equals 2
     result |> List.map (fun e -> e.Name) |> List.sort |> equals [ "Bob"; "Charlie" ]
+
+// ──────────────────────────────────────────────────────────────────────────────
+// StringComparer on non-string field must not throw InvalidCastException
+// ──────────────────────────────────────────────────────────────────────────────
+
+[<Fact>]
+let ``Equals with StringComparer on non-string field does not throw InvalidCastException`` () =
+    // WrappedGuid is not a string; passing StringComparer.OrdinalIgnoreCase used to
+    // crash with InvalidCastException because the code unconditionally cast f.Value
+    // to string when a StringComparer was present.
+    let filter =
+        Equals (
+            { FieldName = "wrappedGuid"; Value = WrappedGuid (Guid.Parse "cccccccc-cccc-cccc-cccc-cccccccccccc") },
+            StringComparer.OrdinalIgnoreCase
+        )
+    let result = applyFilter filter
+    result |> List.length |> equals 1
+    (List.head result).Name |> equals "Charlie"
+
+[<Fact>]
+let ``Not Equals with StringComparer on non-string field does not throw InvalidCastException`` () =
+    let filter =
+        Not (
+            Equals (
+                { FieldName = "wrappedGuid"; Value = WrappedGuid (Guid.Parse "cccccccc-cccc-cccc-cccc-cccccccccccc") },
+                StringComparer.OrdinalIgnoreCase
+            )
+        )
+    let result = applyFilter filter
+    result |> List.length |> equals 2
+    result |> List.map (fun e -> e.Name) |> List.sort |> equals [ "Alice"; "Bob" ]
